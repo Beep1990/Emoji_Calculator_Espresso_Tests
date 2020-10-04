@@ -3,7 +3,8 @@ package com.raywenderlich.android.emojicalculator
 import android.app.Activity
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.TypeTextAction
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -73,6 +74,42 @@ class MainActivityTest {
                 .check(matches(isDisplayed()))
     }
 
+    @Test
+    fun whenGreatButtonIsPressedAndAmountIsEmptyTipIsEmpty() {
+        onView(withId(R.id.buttonGreat))
+                .perform(click())
 
+        onView(allOf(withId(R.id.textTip), withText("")))
+                .check(matches(isDisplayed()))
+    }
 
+    @Test
+    fun whenOkayButtonIsPressedAndAmountIsFilledTipIsSet() {
+        onView(withId(R.id.inputAmount))
+                .perform(typeText("11"))
+        closeSoftKeyboard()
+
+        onView(withId(R.id.buttonOkay))
+                .perform(click())
+
+        onView(withId(R.id.textTip))
+                .check(matches(withText("1.98")))
+
+    }
+
+    @Test
+    fun whenOkayButtonIsPressedAndRoundSwitchIsSelectedAmountIsCorrect() {
+        onView(withId(R.id.inputAmount))
+                .perform(typeText("11"))
+        closeSoftKeyboard()
+
+        onView(withId(R.id.switchRound))
+                .perform(click())
+
+        onView(withId(R.id.buttonOkay))
+                .perform(click())
+
+        onView(withId(R.id.textTip))
+                .check(matches(withText("2.00")))
+    }
 }
