@@ -66,7 +66,11 @@ class MainActivityTest {
     
     @Test
     fun whenBadButtonIsPressedAndAmountIsEmptyTipIsEmpty() {
+        onView(withId(R.id.buttonBad))
+                .perform(click())
 
+        onView(allOf(withId(R.id.textTip), withText("")))
+                .check(matches(isDisplayed()))
     }
 
 
